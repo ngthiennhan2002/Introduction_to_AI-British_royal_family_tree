@@ -2,14 +2,14 @@
 female(queenElizabethII).
 male(princePhilip).
 married(queenElizabethII,princePhilip).
-child(princeCharles, queenElizabethII).
-child(princeCharles, princePhilip).
-child(princeAndrew, queenElizabethII).
-child(princeAndrew, princePhilip).
-child(princessAnne, queenElizabethII).
-child(princessAnne, princePhilip).
-child(princeEdward, queenElizabethII).
-child(princeEdward, princePhilip).
+parent(queenElizabethII, princeCharles).
+parent(princePhilip, princeCharles).
+parent(queenElizabethII, princeAndrew).
+parent(princePhilip, princeAndrew).
+parent(queenElizabethII, princessAnne).
+parent(princePhilip, princessAnne).
+parent(queenElizabethII, princeEdward).
+parent(princePhilip, princeEdward).
 male(princeCharles).
 male(princeAndrew).
 female(princessAnne).
@@ -19,10 +19,10 @@ male(princeEdward).
 female(diana).
 female(camillaParkerBowles).
 married(princeCharles,diana).
-child(princeWilliam, princeCharles).
-child(princeWilliam, diana).
-child(princeHarry, princeCharles).
-child(princeHarry, diana).
+parent(princeCharles, princeWilliam).
+parent(diana, princeWilliam).
+parent(princeCharles, princeHarry).
+parent(diana, princeHarry).
 male(princeHarry).
 male(princeWilliam).
 divorced(princeCharles,diana).
@@ -31,22 +31,22 @@ married(princeCharles, camillaParkerBowles).
 /*Prince Andrew family: 2 children*/
 female(sarahFerguson).
 married(princeAndrew, sarahFerguson).
-child(princessEugenie, princeAndrew).
-child(princessEugenie, sarahFerguson).
-child(princessBeatrice, princeAndrew).
-child(princessBeatrice, sarahFerguson).
+parent(princeAndrew, princessEugenie).
+parent(sarahFerguson, princessEugenie).
+parent(princeAndrew, princessBeatrice).
+parent(sarahFerguson, princessBeatrice).
 female(princessEugenie).
 female(princessBeatrice).
 
 /*Prince William family: 3 children*/
 female(kateMiddleton).
 married(kateMiddleton, princeWilliam).
-child(princeGeorge, kateMiddleton).
-child(princeGeorge, princeWilliam).
-child(princessCharlotte, kateMiddleton).
-child(princessCharlotte, princeWilliam).
-child(princeLouis, kateMiddleton).
-child(princeLouis, princeWilliam).
+parent(kateMiddleton, princeGeorge).
+parent(princeWilliam, princeGeorge).
+parent(kateMiddleton, princessCharlotte).
+parent(princeWilliam, princessCharlotte).
+parent(kateMiddleton, princeLouis).
+parent(princeWilliam, princeLouis).
 male(princeGeorge).
 female(princessCharlotte).
 male(princeLouis).
@@ -54,17 +54,17 @@ male(princeLouis).
 /*Prince Harry family: 1 child*/
 female(meghanMarkle).
 married(princeHarry, meghanMarkle).
-child(archieHarrison, princeHarry).
-child(archieHarrison, meghanMarkle).
+parent(princeHarry, archieHarrison).
+parent(meghanMarkle, archieHarrison).
 male(archieHarrison).
 
 /*Princess Anne family: 2 children, divorced once*/
 male(markPhillips).
 married(princessAnne, markPhillips).
-child(peterPhillips, princessAnne).
-child(peterPhillips, markPhillips).
-child(zaraTindall, princessAnne).
-child(zaraTindall, markPhillips).
+parent(princessAnne, peterPhillips).
+parent(markPhillips, peterPhillips).
+parent(princessAnne, zaraTindall).
+parent(markPhillips, zaraTindall).
 male(peterPhillips).
 female(zaraTindall).
 divorced(princessAnne, markPhillips).
@@ -78,10 +78,10 @@ married(zaraTindall, mikeTindall).
 /*Prince Edward family: 2 children*/
 female(sophieRhysJones).
 married(princeEdward, sophieRhysJones).
-child(ladyLouiseWindsor, princeEdward).
-child(ladyLouiseWindsor, sophieRhysJones).
-child(jamesViscount, princeEdward).
-child(jamesViscount, sophieRhysJones).
+parent(princeEdward, ladyLouiseWindsor).
+parent(sophieRhysJones, ladyLouiseWindsor).
+parent(princeEdward, jamesViscount).
+parent(sophieRhysJones, jamesViscount).
 female(ladyLouiseWindsor).
 male(jamesViscount).
 
@@ -89,7 +89,7 @@ male(jamesViscount).
 
 
 /*Initial predicates*/
-parent(Parent,Child) :- child(Child,Parent).
+child(Child,Parent) :- parent(Parent,Child).
 not(male(Person)) :- female(Person).
 not(female(Person)) :- male(Person).
 divorced(X,Y) :- X @< Y, divorced(Y,X).
@@ -99,7 +99,7 @@ married(X,Y) :- X @< Y, married(Y,X).
 /*vo chong*/
 husband(Person,Wife) :- married(Person,Wife), female(Wife), male(Person).
 wife(Person,Husband) :- married(Person,Husband), male(Husband), female(Person).
-spouse(Husband,Wife) :- married(Husband,Wife).
+spouse(X,Y) :- married(X,Y).
 
 /*cha me*/
 father(Parent,Child) :- parent(Parent,Child), male(Parent).
